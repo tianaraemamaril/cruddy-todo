@@ -46,6 +46,16 @@ exports.getNextUniqueId = (callback) => {
     });
 
   });
+
+  // let myFunc = (err, fileData) => {
+
+  //   writeCounter(fileData+1, (err, counterString) => {
+  //     callback(null, counterString);
+  //   });
+
+  // };
+  
+  // readCounter(myFunc);
 };
 
 

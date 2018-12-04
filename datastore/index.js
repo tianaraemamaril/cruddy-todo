@@ -10,7 +10,7 @@ var hi;
 
 exports.create = (text, callback) => {
   counter.getNextUniqueId((err,counterString) => {   
-  fs.writeFile(`./datastore/data/${counterString}.txt`, text, (err) => {
+  fs.writeFile(`test/testData/${counterString}.txt`, text, (err) => {
     callback(null, text);
   });
 });
@@ -20,20 +20,30 @@ exports.create = (text, callback) => {
 };
 
 exports.readAll = (callback) => {
-  var data = [];
-  _.each(items, (text, id) => {
-    data.push({ id, text });
-  });
-  callback(null, data);
+  // returning an array of todos to client app whenever a GET request to the collection route 
+  // occurs. To do this, you will need to read the dataDir directory and build a list of files. 
+  // Remember, the id of each todo item is encoded in its filename.
+  //fs.readFile()
+  //readCounter
+  // var data = [];
+  // _.each(items, (text, id) => {
+  //   data.push({ id, text: id });
+  // });
+  // callback(null, data);
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+  fs.readFile(`./test/testData/${id}`, (err, fileData) => {
+    var text = items[id]; // value of the file??
+    // if(err)??
+    if (!text) {
+      callback(new Error(`No item with id: ${id}`));
+    } else {;
+      // deeply equal { Object (id, text) }
+      callback(null, { id: id, text: fileData });
+    }
+  });
+  
 };
 
 exports.update = (id, text, callback) => {
