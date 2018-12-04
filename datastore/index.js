@@ -4,13 +4,19 @@ const _ = require('underscore');
 const counter = require('./counter');
 
 var items = {};
+var hi;
 
 // Public API - Fix these CRUD functions ///////////////////////////////////////
 
 exports.create = (text, callback) => {
-  var id = counter.getNextUniqueId();
-  items[id] = text;
-  callback(null, { id, text });
+  counter.getNextUniqueId((err,counterString) => {   
+  fs.writeFile(`./datastore/data/${counterString}.txt`, text, (err) => {
+    callback(null, text);
+  });
+});
+  // var id = counter.getNextUniqueId();
+  // items[id] = text;
+  // callback(null, { id, text });
 };
 
 exports.readAll = (callback) => {
