@@ -25,13 +25,23 @@ exports.create = (text, callback) => {
 };
 
 exports.readAll = (callback) => {
-  fs.readFile()
-  readCounter                      
-  var data = [];
-  _.each(items, (text, id) => {
-    data.push({ id, text: id });
-  });
-  callback(null, data);
+  fs.readdir(exports.dataDir, (err, data){
+    if(err){
+      callback(err);
+    }
+    var data = _.map(files, (file) => {
+     
+    })
+  })
+
+
+  // fs.readFile()
+  // readCounter                      
+  // var data = [];
+  // _.each(items, (text, id) => {
+  //   data.push({ id, text: id });
+  // });
+  // callback(null, data);
 };
 
 exports.readOne = (id, callback) => {
@@ -72,13 +82,17 @@ exports.update = (id, text, callback) => {
 };
 
 exports.delete = (id, callback) => {
-  var item = items[id];
-  delete items[id];
-  if (!item) {
-    // report an error if item not found
-    callback(new Error(`No item with id: ${id}`));
+  var filePath = path.join(exports.dataDir, id + '.txt');
+  if(!id) {
+    throw Error;
   } else {
-    callback();
+    fs.unlink(filePath, (err) => {
+      if(err) {
+        callback(err);
+      } else {
+        callback();
+      }
+    });
   }
 };
 

@@ -44,7 +44,6 @@ exports.getNextUniqueId = (callback) => {
     writeCounter(fileData+1, (err, counterString) => {
       callback(null, counterString);
     });
-
   });
 
   // let myFunc = (err, fileData) => {
